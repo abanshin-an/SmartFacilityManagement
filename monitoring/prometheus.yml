@@ -1,0 +1,27 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  scrape_timeout: 10s
+
+scrape_configs:
+  - job_name: 'spring-apps'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets:
+          - 'gateway:8080'
+          - 'person:8080'
+          - 'facility:8080'
+          - 'appointment:8080'
+          - 'action:8080'
+          - 'agent:8080'
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+      - source_labels: [__address__]
+        regex: '(.*):\d+'
+        replacement: '${1}'
+        target_label: service
+
+  - job_name: 'prometheus-self'
+    static_configs:
+      - targets: ['localhost:9090']

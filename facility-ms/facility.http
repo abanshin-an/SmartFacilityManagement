@@ -1,0 +1,30 @@
+###
+POST http://localhost:8088/api/facility
+Content-Type: application/json
+
+{
+  "id" : "",
+  "login" :  "aaa",
+  "password" : "123"
+}
+
+###
+POST http://localhost:8088/api/facility
+Content-Type: application/json
+
+{
+  "id" : "",
+  "login" :  "bbb",
+  "password" : "123"
+}
+### GET request to example server
+GET http://localhost:8088/api/facility
+
+###
+### GET request to example server
+GET http://localhost:8088/api/facility?name=aaa
+
+###
+GET http://localhost/hello
+Content-Type: text/plain
+

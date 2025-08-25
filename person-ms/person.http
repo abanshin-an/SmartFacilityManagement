@@ -1,0 +1,32 @@
+###
+POST http://localhost:8081/api/person
+Content-Type: application/json
+
+{
+  "fullName" :  "Ivanov I I",
+  "login" :  "aaa",
+  "email": "ivanov@email.ru",
+  "phone": "+7876543219",
+  "password" : "123"
+}
+
+###
+POST http://localhost:8088/api/person
+Content-Type: application/json
+
+{
+  "id" : "",
+  "login" :  "bbb",
+  "password" : "123"
+}
+### GET request to example server
+GET http://localhost:8088/api/person
+
+###
+### GET request to example server
+GET http://localhost:8088/api/person?name=aaa
+
+###
+GET http://localhost/hello
+Content-Type: text/plain
+

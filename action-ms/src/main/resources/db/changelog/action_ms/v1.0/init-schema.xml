@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="0000" author="a2n">
+        <preConditions>
+            <dbms type="postgresql" />
+        </preConditions>
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS action_ms;
+        </sql>
+    </changeSet>
+    <changeSet id="0001" author="a2n">
+        <createTable tableName="event" schemaName="action_ms">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="message_id" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="facility_id" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message_type" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="param_value" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="unit" type="varchar(20)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="timestamp without timezone">
+                <constraints nullable="true"/>
+            </column>
+            <column name="reference_id" type="varchar(36)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="json" type="varchar(4096)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="saved_at" type="timestamp without timezone">
+                <constraints nullable="true"/>
+            </column>
+            <column name="processed_at" type="timestamp without timezone">
+                <constraints nullable="true"/>
+            </column>
+            <column name="status" type="varchar(20)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <createTable tableName="rule" schemaName="action_ms">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="message_type" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="action" schemaName="action_ms">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="rule_id" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="responsibility_name" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="action_name" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="rule_id"
+                                 baseTableName="action"
+                                 baseTableSchemaName="action_ms"
+                                 constraintName="fk_rule_action_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="rule"
+                                 referencedTableSchemaName="action_ms"/>
+    </changeSet>
+</databaseChangeLog>

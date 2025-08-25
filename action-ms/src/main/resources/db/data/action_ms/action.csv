@@ -1,0 +1,9 @@
+id,rule_id,responsibility_name,action_name
+0198bef3-5c56-7317-9fc8-2125a85748ea,0198bdfc-caea-74a1-a7eb-212215489e84,agent,COMMANDTurnOffTheWater
+0198bef3-5c56-72b1-9823-c174a8e94779,0198bdfc-caea-74a1-a7eb-212215489e84,owner,COMMANDNotify
+0198bef3-5c56-7960-b429-33511f2fda2e,0198bdfc-caea-74a1-a7eb-212215489e84,plumber,COMMANDNotify
+0198bef3-5c56-7c0b-a8b1-71c269285581,0198bdfc-caea-779a-8df1-0809cd4dcd05,owner,COMMANDNotify
+0198bef3-5c56-7a92-ba4f-e88a7f7b48de,0198bdfc-caea-779a-8df1-0809cd4dcd05,electrician,COMMANDNotify
+0198bef3-5c56-7ee1-99d2-532e95c54220,0198bdfa-2a0e-7249-aeda-feb4e31b1830,agent,COMMANDTurnOffTheElectricity
+0198bef3-5c56-7663-b0bc-8b3201dbe105,0198bdfa-2a0e-7249-aeda-feb4e31b1830,electrician,COMMANDNotify
+0198bef3-5c56-70e7-aa04-591a67410bba,0198bdfa-2a0e-7249-aeda-feb4e31b1830,owner,COMMANDNotify

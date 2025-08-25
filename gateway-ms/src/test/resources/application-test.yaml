@@ -1,0 +1,25 @@
+spring:
+  main:
+    web-application-type: reactive
+  cloud:
+    gateway:
+      server:
+        webflux:
+          filter:
+            remove-null-headers: true
+          routes:
+            - id: person
+              uri: http://localhost:${wiremock.server.port}
+              predicates:
+                - Path=/api/person/**
+              filters:
+                - name: RequestRateLimiter
+                  args:
+                    redis-rate-limiter.replenishRate: 2
+                    redis-rate-limiter.burstCapacity: 2
+                    redis-rate-limiter.requestedTokens: 1
+                    key-resolver: "#{@remoteAddressKeyResolver}"
+  data:
+    redis:
+      host: localhost
+      port: ${spring.data.redis.port}
