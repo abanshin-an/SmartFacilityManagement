@@ -10,7 +10,8 @@
         <sql>
             CREATE SCHEMA IF NOT EXISTS facility_ms;
         </sql>
-    </changeSet>    <changeSet id="0001" author="a2n">
+    </changeSet>
+    <changeSet id="0001" author="a2n">
         <createTable tableName="facility" schemaName="facility_ms">
             <column name="id" type="varchar(36)">
                 <constraints primaryKey="true" nullable="false"/>

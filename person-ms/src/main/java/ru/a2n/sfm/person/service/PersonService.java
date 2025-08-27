@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,17 +28,11 @@ public class PersonService {
     private final PersonRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final PersonMapper personMapper;
-    private final HashService hashService;
 
-    public PersonService(
-            PersonRepository repository,
-            PasswordEncoder passwordEncoder,
-            PersonMapper personMapper,
-            HashService hashService) {
+    public PersonService(PersonRepository repository, PasswordEncoder passwordEncoder, PersonMapper personMapper) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.personMapper = personMapper;
-        this.hashService = hashService;
     }
 
     @Transactional(readOnly = true)
@@ -109,6 +104,13 @@ public class PersonService {
             logger.error("changePassword exception {}", e.getMessage());
         }
         return Optional.empty();
+    }
+
+    @Scheduled(fixedDelay = 1000)
+    @Transactional
+    public void deleteFakePerson() {
+        logger.info("deleteFakePerson");
+        repository.deleteFakePerson();
     }
 
     private Optional<PersonFullDto> mapFullDto(Person person) {

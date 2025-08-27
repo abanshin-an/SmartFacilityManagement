@@ -244,11 +244,11 @@
       },
       "targets": [
         {
-          "expr": "sum(rate(http_server_requests_seconds_count{application=~\"$service\", status=~\"5..\", uri=~\"$uri_filter\"}[1m])) by (uri, status)",
+          "expr": "sum(rate(http_server_requests_seconds_count{application=~\"$service\", status=~\"5..\", uri=~\"$uri_filter\"}[1m])) by (uri, status) or vector(0)",
           "legendFormat": "{{uri}} (5xx)"
         },
         {
-          "expr": "sum(rate(http_server_requests_seconds_count{application=~\"$service\", status=~\"4..\", uri=~\"$uri_filter\"}[1m])) by (uri, status)",
+          "expr": "sum(rate(http_server_requests_seconds_count{application=~\"$service\", status=~\"4..\", uri=~\"$uri_filter\"}[1m])) by (uri, status) or vector(0)",
           "legendFormat": "{{uri}} (4xx)"
         }
       ],
@@ -414,12 +414,12 @@
       },
       "targets": [
         {
-          "expr": "rate(feign_client_requests_seconds_count{application=~\"$service\"}[1m])",
+          "expr": "rate(http_client_requests_seconds_count{application=~\"$service\"}[1m])",
           "legendFormat": "{{clientName}}",
           "refId": "A"
         }
       ],
-      "title": "Feign Client Calls",
+      "title": "Http Client Calls",
       "type": "timeseries"
     },
     {
@@ -500,7 +500,7 @@
           "refId": "A"
         },
         {
-          "expr": "rate(cat_create_count_total{application=\"person\"}[1m])",
+          "expr": "rate(cat_create_count_total{application=\"person-service\"}[1m])",
           "legendFormat": "Cat Creations",
           "refId": "B"
         }
@@ -512,7 +512,7 @@
   "refresh": "10s",
   "schemaVersion": 37,
   "style": "dark",
-  "tags": ["sfm", "spring-boot"],
+  "tags": ["cat-club", "spring-boot"],
   "templating": {
     "list": [
       {
@@ -556,7 +556,7 @@
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
-        "regex": "api\\/.*",
+        "regex": "/actuator/.*|.*/prometheus|UNKNOWN",
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
@@ -564,12 +564,12 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Smart facility management Services Dashboard",
+  "title": "Smart Facility Dashboard",
   "uid": "sfm-main",
   "version": 1
 }

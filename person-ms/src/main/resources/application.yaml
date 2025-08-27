@@ -102,58 +102,11 @@ management:
 
 logging:
     level:
-        root: DEBUG
+        ru.a2n.sfm: INFO
+#        root: DEBUG
 #        org.springframework.boot.actuate: DEBUG
 #        org.springframework.web: DEBUG
 #        org.springdoc: INFO
 #        io.micrometer: INFO
 #        org.hibernate.stat: DEBUG
 #        org.hibernate.SQL: DEBUG
-
----
-#spring:
-#    config:
-#        activate:
-#            on-profile: docker
-#    datasource:
-#        url: jdbc:postgresql://postgres:5432/sfm
-#        username: postgres
-#        password: postgres
-#    jpa:
-#        properties:
-#            hibernate:
-#                generate-statistics: true
-#    cache:
-#        metrics:
-#            enabled: true
-#
-#management:
-#    endpoints:
-#        web:
-#            exposure:
-#                include: health, prometheus
-#            base-path: /actuator
-#    metrics:
-#        export:
-#            prometheus:
-#                enabled: true
-#        tags:
-#            application: ${spring.application.name}
-#        distribution:
-#            percentiles-histogram:
-#                http.server.requests: true
-#            percentiles:
-#                http.server.requests: 0.5,0.95,0.99
-#
-#springdoc:
-#    swagger-ui:
-#        enabled: true
-#        path: /swagger-ui.html
-#        tags-sorter: alpha
-#        operations-sorter: alpha
-#    api-docs:
-#        path: /v3/api-docs
-#    group-configs:
-#        - group: person-ms
-#          paths-to-match: /api/person/**
-#          packages-to-scan: ru.a2n.sfm.person.controller

@@ -3,14 +3,12 @@ package ru.a2n.sfm.appointment.client;
 import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(value = "appointment")
+@FeignClient(value = "appointment", url = "http://appointment-ms:8080")
 public interface AppointmentClient {
-    @GetMapping(
-            value = "api/appointment/getPersonList?facility_id={facility_id}&responsibility_name={responsibility_name}",
-            produces = "application/json")
+    @GetMapping(value = "api/appointment/getPersonList", produces = "application/json")
     List<String> getPersonIdListByFacilityIdAndResponsibility(
-            @PathVariable("facility_id") String facilityId,
-            @PathVariable("responsibility_name") String responsibilityName);
+            @RequestParam("facility_id") String facilityId,
+            @RequestParam("responsibility_name") String responsibilityName);
 }

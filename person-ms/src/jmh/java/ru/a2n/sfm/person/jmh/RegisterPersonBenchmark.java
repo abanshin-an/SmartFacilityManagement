@@ -51,7 +51,7 @@ public class RegisterPersonBenchmark {
                 "fullName",
                 "login",
                 "e@mail.ru",
-                "+7987-654-3210", // RandomStringUtils.insecure().next(20,  "abcdefghijklmnopqrstuvwxyz0123456789"),
+                "+7987-654-3210",
                 RandomStringUtils.insecure().next(20, "abcdefghijklmnopqrstuvwxyz0123456789"))));
     }
 

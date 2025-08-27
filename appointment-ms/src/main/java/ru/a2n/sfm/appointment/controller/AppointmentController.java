@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Tag(name = "Appointment Management", description = "Endpoints for managing appointments")
 public interface AppointmentController {
 
-    @GetMapping("/getPersonList?facility_id={facility_id}&responsibility_name={responsibility_name}")
+    @GetMapping("/getPersonList")
     @Operation(summary = "Get appointments list", description = "Get appointments list")
     @ApiResponses(
             value = {
@@ -28,6 +28,6 @@ public interface AppointmentController {
     ResponseEntity<List<String>> getPersonIdListByFacilityIdAndResponsibility(
             @Parameter(description = "Appointment registration data") @RequestParam(value = "facility_id")
                     String facilityId,
-            @Parameter(description = "Appointment registration data") @RequestParam(value = "responsibilityName")
+            @Parameter(description = "Appointment registration data") @RequestParam(value = "responsibility_name")
                     String responsibilityName);
 }

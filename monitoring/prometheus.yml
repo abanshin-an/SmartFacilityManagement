@@ -8,12 +8,11 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     static_configs:
       - targets:
-          - 'gateway:8080'
-          - 'person:8080'
-          - 'facility:8080'
-          - 'appointment:8080'
-          - 'action:8080'
-          - 'agent:8080'
+          - 'gateway-ms:8080'
+          - 'person-ms:8080'
+          - 'facility-ms:8080'
+          - 'appointment-ms:8080'
+          - 'action-ms:8080'
     relabel_configs:
       - source_labels: [__address__]
         target_label: instance

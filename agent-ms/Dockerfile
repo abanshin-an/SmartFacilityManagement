@@ -1,4 +1,4 @@
-FROM bellsoft/liberica-openjdk-alpine:21
+FROM eclipse-temurin:21-jre-jammy
 ARG JAR_FILE=build/libs/agent-ms-1.0.0.jar
 COPY ${JAR_FILE} app.jar
 EXPOSE 8080

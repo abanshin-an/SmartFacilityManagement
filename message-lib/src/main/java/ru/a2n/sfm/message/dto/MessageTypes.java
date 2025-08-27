@@ -27,6 +27,13 @@ public class MessageTypes {
         }
     }
 
+    public static boolean isAlarm(String messageType) {
+        if (messageType != null) {
+            return messageType.startsWith(Alarms.ALARM);
+        }
+        return false;
+    }
+
     static {
         Alarms.register();
         Commands.register();

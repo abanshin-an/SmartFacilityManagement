@@ -37,17 +37,42 @@ spring:
         metrics:
             enabled: true
 
+#ratelimiter
+resilience4j:
+    ratelimiter:
+        instances:
+            rps_limiter:
+                limitForPeriod: 20
+                limitRefreshPeriod: 1s
+                timeoutDuration: 0s
+            rpm_limiter:
+                limitForPeriod: 30
+                limitRefreshPeriod: 1m
+                timeoutDuration: 0s
+
+    circuitbreaker:
+        configs:
+            default:
+                slidingWindowType: TIME_BASED
+                failure-rate-threshold: 50
+                slidingWindowSize: 10
+                waitDurationInOpenState: 10s
+                minimumNumberOfCalls: 10
+        instances:
+            age_circuit_breaker:
+                baseConfig: default
+
 feign:
+    circuitbreaker:
+        enabled: true
     client:
         config:
             default:
-                connectTimeout: 5000
-                readTimeout: 5000
+                connectTimeout: 2000
+                readTimeout: 2000
                 loggerLevel: basic
                 metrics:
                     enabled: true
-            appointment:
-                url: http://appointment:8083
     metrics:
         enabled: true
 
@@ -88,7 +113,7 @@ management:
                 jmx:
                     enabled: true
         prometheus:
-            enabled: true
+            access: unrestricted
         endpoint:
             heapdump:
                 enabled: true
@@ -96,11 +121,6 @@ management:
         jmx:
             enabled: true
     metrics:
-        export:
-            prometheus:
-                enabled: true
-                step: 1m
-                descriptions: true
         tags:
             application: ${spring.application.name}
             region: local
@@ -111,62 +131,13 @@ management:
                 http.server.requests: 0.5,0.75,0.95,0.99
             sla:
                 http.server.requests: 100ms,500ms,1s,5s
+    prometheus:
+        metrics:
+            export:
+                enabled: true
+                step: 1m
+                descriptions: true
 
 logging:
     level:
         root: DEBUG
-#        org.springframework.boot.actuate: DEBUG
-#        org.springframework.web: DEBUG
-#        org.springdoc: INFO
-#        io.micrometer: INFO
-#        org.hibernate.stat: DEBUG
-#        org.hibernate.SQL: DEBUG
-
----
-#spring:
-#    config:
-#        activate:
-#            on-profile: docker
-#    datasource:
-#        url: jdbc:postgresql://postgres:5432/sfm
-#        username: postgres
-#        password: postgres
-#    jpa:
-#        properties:
-#            hibernate:
-#                generate-statistics: true
-#    cache:
-#        metrics:
-#            enabled: true
-#
-#management:
-#    endpoints:
-#        web:
-#            exposure:
-#                include: health, prometheus
-#            base-path: /actuator
-#    metrics:
-#        export:
-#            prometheus:
-#                enabled: true
-#        tags:
-#            application: ${spring.application.name}
-#        distribution:
-#            percentiles-histogram:
-#                http.server.requests: true
-#            percentiles:
-#                http.server.requests: 0.5,0.95,0.99
-#
-#springdoc:
-#    swagger-ui:
-#        enabled: true
-#        path: /swagger-ui.html
-#        tags-sorter: alpha
-#        operations-sorter: alpha
-#    api-docs:
-#        path: /v3/api-docs
-#    group-configs:
-#        - group: action-ms
-#          paths-to-match: /api/action/**
-#          packages-to-scan: ru.a2n.sfm.action.controller
-#
