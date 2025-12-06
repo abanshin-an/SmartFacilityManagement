@@ -1,0 +1,16 @@
+###
+GET http://localhost:8080/api/facility
+Accept: application/json
+
+###
+GET http://localhost:8080/api/facility/45e59459-8339-4c65-8109-bf89d3f776c2
+Accept: application/json
+
+###
+POST http://localhost:8080/api/facility
+Content-Type: application/json
+
+{
+  "name": "Ilia",
+  "eMail": "abrakadabra@gmail.com"
+}

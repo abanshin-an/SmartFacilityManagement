@@ -1,0 +1,143 @@
+server:
+    port: 8080
+db.schema: action_ms
+spring:
+    config:
+        activate:
+            on-profile: default
+    application:
+        name: action-ms
+    datasource:
+        url: jdbc:postgresql://localhost:5432/sfm?searchpath=action_ms
+        username: postgres
+        password: postgres
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate:
+            ddl-auto: validate
+            generate-statistics: true
+        show-sql: true
+        properties:
+            hibernate:
+                format_sql: true
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                session.events.log: true
+    liquibase:
+        change-log: classpath:db/changelog/db.changelog-master.yaml
+        enabled: true
+        parameters:
+            ignoreDuplicateTables: true
+            ignoreChecksums: true
+            schema.name: ${db.schema}
+        default-schema: ${db.schema}
+    cache:
+        caffeine:
+            spec: maximumSize=500,expireAfterWrite=10m
+        type: caffeine
+        metrics:
+            enabled: true
+
+#ratelimiter
+resilience4j:
+    ratelimiter:
+        instances:
+            rps_limiter:
+                limitForPeriod: 20
+                limitRefreshPeriod: 1s
+                timeoutDuration: 0s
+            rpm_limiter:
+                limitForPeriod: 30
+                limitRefreshPeriod: 1m
+                timeoutDuration: 0s
+
+    circuitbreaker:
+        configs:
+            default:
+                slidingWindowType: TIME_BASED
+                failure-rate-threshold: 50
+                slidingWindowSize: 10
+                waitDurationInOpenState: 10s
+                minimumNumberOfCalls: 10
+        instances:
+            age_circuit_breaker:
+                baseConfig: default
+
+feign:
+    circuitbreaker:
+        enabled: true
+    client:
+        config:
+            default:
+                connectTimeout: 2000
+                readTimeout: 2000
+                loggerLevel: basic
+                metrics:
+                    enabled: true
+    metrics:
+        enabled: true
+
+springdoc:
+    swagger-ui:
+        path: /swagger-ui.html
+        tags-sorter: alpha
+        operations-sorter: alpha
+        doc-expansion: none
+        display-request-duration: true
+    api-docs:
+        path: /v3/api-docs
+        groups:
+            enabled: true
+    packages-to-scan: ru.a2n.sfm.action.controller
+    default-produces-media-type: application/json
+    default-consumes-media-type: application/json
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+            base-path: /actuator
+        jmx:
+            exposure:
+                include: '*'
+    endpoint:
+        health:
+            show-details: always
+            group:
+                readiness:
+                    include: db,diskSpace
+                liveness:
+                    include: ping
+        metrics:
+            export:
+                jmx:
+                    enabled: true
+        prometheus:
+            access: unrestricted
+        endpoint:
+            heapdump:
+                enabled: true
+                sensitive: false
+        jmx:
+            enabled: true
+    metrics:
+        tags:
+            application: ${spring.application.name}
+            region: local
+        distribution:
+            percentiles-histogram:
+                http.server.requests: true
+            percentiles:
+                http.server.requests: 0.5,0.75,0.95,0.99
+            sla:
+                http.server.requests: 100ms,500ms,1s,5s
+    prometheus:
+        metrics:
+            export:
+                enabled: true
+                step: 1m
+                descriptions: true
+
+logging:
+    level:
+        root: DEBUG

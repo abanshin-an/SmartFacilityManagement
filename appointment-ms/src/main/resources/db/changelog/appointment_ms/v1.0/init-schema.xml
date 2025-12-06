@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="0000" author="a2n">
+        <preConditions>
+            <dbms type="postgresql" />
+        </preConditions>
+        <sql>
+            CREATE SCHEMA IF NOT EXISTS appointment_ms;
+        </sql>
+    </changeSet>
+    <changeSet id="0001" author="a2n">
+        <createTable tableName="appointment" schemaName="appointment_ms">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="facility_id" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="person_id" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="responsibility_id" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="responsibility" schemaName="appointment_ms">
+            <column name="id" type="varchar(36)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="responsibility_name" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="responsibility_id"
+                                 baseTableName="appointment"
+                                 baseTableSchemaName="appointment_ms"
+                                 constraintName="fk_appointment_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="responsibility"
+                                 referencedTableSchemaName="appointment_ms"
+                        />
+    </changeSet>
+</databaseChangeLog>

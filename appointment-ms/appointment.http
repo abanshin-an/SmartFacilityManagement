@@ -1,0 +1,7 @@
+###
+GET http://localhost:8083/api/appointment/getPersonList?facility_id=0198bd32-4a23-72c5-89a3-8bb0896beba2&responsibility_name=owner
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/appointment/getPersonList?facility_id=0198bd32-4a23-72c5-89a3-8bb0896beba2&responsibility_name=owner
+Content-Type: application/json

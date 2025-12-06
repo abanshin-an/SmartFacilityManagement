@@ -1,0 +1,46 @@
+###
+POST http://localhost:8080/api/action
+Content-Type: application/json
+
+{
+  "messageId": "0198c2e2-1059-7204-9a36-55fa5dbea22b",
+  "facilityId": "0198bd32-4a23-72c5-89a3-8bb0896beba2",
+  "messageType": "ALARMLeak",
+  "value" : 0,
+  "createdAt": "2025-08-27T15:54:30.123456789"
+  }
+
+###
+POST http://localhost:8084/api/action
+Content-Type: application/json
+
+{
+  "messageId": "0198c2e2-1059-7204-9a36-55fa5dbea22b",
+  "facilityId": "0198bd32-4a23-72c5-89a3-8bb0896beba2",
+  "messageType": "ALARMLeak",
+  "value" : 0,
+  "createdAt": "2025-08-27T15:54:30.123456789"
+}
+
+###
+POST http://localhost:8080/api/action
+Content-Type: application/json
+
+{
+  "messageId": "0198c2e2-1059-7204-9a36-55fa5dbea22b",
+  "facilityId": "0198bd32-4a23-72c5-89a3-8bb0896beba2",
+  "messageType": "EVENTCounterWater",
+  "value" : "2",
+  "createdAt": "2025-08-27T15:54:30.123456789"
+}
+
+###
+POST http://localhost:8080/api/action
+Content-Type: application/json
+
+{
+  "messageId": "bcb14214-0be9-46ed-82ab-5b6ded86a151",
+  "facilityId": "0198bd32-4a23-72c5-89a3-8bb0896beba2",
+  "messageType": "EVENTCounterWater",
+  "value" : 81
+}
